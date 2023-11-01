@@ -1,11 +1,12 @@
 // Board Class: Handles game state
 
-//* TODO: Add ship class to board
+//* TODO: Design user input
 //* TODO: Rotation support
 
 
 // Libararies
 #include <iostream>
+#include "ship.hh"
 
 // Env Vars
 const int BOARD_SIZE = 10;
@@ -26,10 +27,10 @@ class Board
         /** Sets a char onto board
             @param: x
             @param: y
-            @param: c
+            @param: ship
             @return: none
         */
-        void setBoard(int x, int y, char c);
+        void setBoard(int x, int y, Ship ship);
 
         /** Gets a char from board
             @param: x
@@ -77,12 +78,9 @@ void Board::printBoard()
     }
 }
 
-void Board::setBoard(int x, int y, char c)
+void Board::setBoard(int x, int y, Ship c)
 {
-    //* Will need to update char to ship later on
-
-    // Set board
-    board[x][y] = c;
+    // Put Ship c on board according to x, y
 }
 
 void Board::eraseBoard()
