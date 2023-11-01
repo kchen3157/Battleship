@@ -1,5 +1,5 @@
 #ifndef __SHIP_HH__
-#define __SHIP_HH__  1
+#define __SHIP_HH__
 
 #include <array>
 #include <string>

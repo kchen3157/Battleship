@@ -6,6 +6,8 @@
 
 // Libararies
 #include <iostream>
+#include <map>
+#include <utility>
 #include "ship.hh"
 
 // Env Vars
@@ -22,7 +24,7 @@ class Board
             @param: none
             @return: none
         */
-        void printBoard();
+        void print_board();
 
         /** Sets a char onto board
             @param: x
@@ -30,20 +32,20 @@ class Board
             @param: ship
             @return: none
         */
-        void setBoard(int x, int y, Ship ship);
+        void place_ship(int x, int y, char direction, Ship ship);
 
         /** Gets a char from board
             @param: x
             @param: y
             @return: char
         */
-        char getBoard(int x, int y);
+        char get_board(int x, int y);
 
         /** Erase the board
             @param: none
             @return: none
         */
-        void eraseBoard();
+        void erase_board();
 
     // Private variables
     private:
@@ -65,7 +67,7 @@ Board::Board()
 }
 
 
-void Board::printBoard()
+void Board::print_board()
 {
     // Basic, content of board only (no legend)
     for (int i = 0; i < BOARD_SIZE; i++)
@@ -78,12 +80,38 @@ void Board::printBoard()
     }
 }
 
-void Board::setBoard(int x, int y, Ship c)
+void Board::place_ship(int x, int y, char direction, Ship ship)
 {
-    // Put Ship c on board according to x, y
+    // Verify that the ship can be placed given location, direction, and ship length
+
+    // Obtain theoretical ship placement
+    std::map<int, int> ship_placement;
+    for (int i = 0; i < ship.get_length(); i++)
+    {
+        if (direction == 'u')
+        {
+            ship_placement.insert(std::pair<int, int>(x - i, y));
+        }
+        else if (direction == 'd')
+        {
+            ship_placement.insert(std::pair<int, int>(x + i, y));
+        }
+        else if (direction == 'r')
+        {
+            ship_placement.insert(std::pair<int, int>(x, y + i));
+        }
+        else if (direction == 'l')
+        {
+            ship_placement.insert(std::pair<int, int>(x, y - i));
+        }
+    }
+
+
+
+    
 }
 
-void Board::eraseBoard()
+void Board::erase_board()
 {
     // Erase board
     for (int i = 0; i < BOARD_SIZE; i++)
