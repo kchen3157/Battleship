@@ -1,4 +1,8 @@
-//* Board Class: Handles game state
+// Board Class: Handles game state
+
+//* TODO: Add ship class to board
+//* TODO: Rotation support
+
 
 // Libararies
 #include <iostream>
