@@ -1,4 +1,4 @@
-// Board Class: Handles game state
+//* Board Class: Handles game state
 
 // TODO: Design user input
 // TODO: Rotation support
@@ -12,7 +12,7 @@
 #include "ship.hh"
 
 // Env Vars
-const int BOARD_SIZE = 10;
+const int BOARD_SIZE = 10; // 10x10 board
 const std::array<char, BOARD_SIZE> LETTER_LEGEND = {'A', 'B', 'C', 'D', 'E',
                                                     'F', 'G', 'H', 'I', 'J'};
 
@@ -49,7 +49,6 @@ class Board
         */
         void erase_board();
 
-    // Private variables
     private:
         // Main board array
         char board[BOARD_SIZE][BOARD_SIZE];
@@ -59,7 +58,7 @@ class Board
 
 Board::Board()
 {
-    // Initialize board
+    // Initialize board with underscores
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         for (int j = 0; j < BOARD_SIZE ; j++)
@@ -138,12 +137,12 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
 
 void Board::erase_board()
 {
-    // Erase board
+    // Fill board with underscores
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         for (int j = 0; j < BOARD_SIZE ; j++)
         {
-            board[i][j] = ' ';
+            board[i][j] = '_';
         }
     }
 }

@@ -1,6 +1,3 @@
-// Defines ship variables
-
-
 // include libraries
 #include <array>
 #include <string>
@@ -65,11 +62,11 @@ class Ship
         int get_length();
         
     private:
-        int type_id;
-        int length;
-        int owner; // 0 for player, 1 for computer
-        char char_code;
-        std::string name;
+        int type_id;            // Ship ID (0-4)
+        int length;             // Ship length
+        int owner;              // 0 for player, 1 for computer
+        char char_code;         // Representation of ship on board
+        std::string name;       // Ship name
 };
 
 
