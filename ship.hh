@@ -8,7 +8,7 @@ class Ship
 {
     public:
         // Constructor
-        Ship(int type_id);
+        Ship(int type_id, int owner);
 
         int get_type();
 

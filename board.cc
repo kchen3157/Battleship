@@ -1,10 +1,11 @@
 // Board Class: Handles game state
 
-//* TODO: Design user input
-//* TODO: Rotation support
+// TODO: Design user input
+// TODO: Rotation support
 
 
 // Libararies
+#include <array>
 #include <iostream>
 #include <map>
 #include <utility>
@@ -12,7 +13,8 @@
 
 // Env Vars
 const int BOARD_SIZE = 10;
-
+const std::array<char, BOARD_SIZE> LETTER_LEGEND = {'A', 'B', 'C', 'D', 'E',
+                                                    'F', 'G', 'H', 'I', 'J'};
 
 class Board
 {
@@ -49,6 +51,7 @@ class Board
 
     // Private variables
     private:
+        // Main board array
         char board[BOARD_SIZE][BOARD_SIZE];
     
 };
@@ -61,7 +64,8 @@ Board::Board()
     {
         for (int j = 0; j < BOARD_SIZE ; j++)
         {
-            board[i][j] = ' ';
+            board[i][j] = '_';
+
         }
     }
 }
@@ -69,12 +73,16 @@ Board::Board()
 
 void Board::print_board()
 {
-    // Basic, content of board only (no legend)
+    std::cout << "  0 1 2 3 4 5 6 7 8 9\n";
+
+
+
     for (int i = 0; i < BOARD_SIZE; i++)
     {
+        std::cout << LETTER_LEGEND[i] << " ";
         for (int j = 0; j < BOARD_SIZE; j++)
         {
-            std::cout << board[i][j];
+            std::cout << board[i][j] << " ";
         }
         std::cout << std::endl;
     }
@@ -104,11 +112,28 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
         {
             ship_placement.insert(std::pair<int, int>(x, y - i));
         }
+        else
+        {
+            std::cout << "Invalid direction" << std::endl;
+            return;
+        }
     }
 
+    // Print ship placement
+    for (auto const& pair : ship_placement)
+    {
+        std::cout << pair.first << " " << pair.second << std::endl;
+    }
 
-
-    
+    // Verify if ship placement is valid
+    for (auto const& pair : ship_placement)
+    {
+        if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 || pair.second > BOARD_SIZE - 1)
+        {
+            std::cout << "Invalid placement" << std::endl;
+            return;
+        }
+    }
 }
 
 void Board::erase_board()
