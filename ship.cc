@@ -82,7 +82,7 @@ Ship::Ship(int type_id, int owner)
         throw std::invalid_argument("Ship Class: Invalid type_id");
     }
     this->type_id = type_id;
-    if (type_id < 0 || type_id > 1) {
+    if (owner < 0 || owner > 1) {
         throw std::invalid_argument("Ship Class: Invalid owner");
     }
     this->owner = owner;
