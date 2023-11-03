@@ -78,7 +78,13 @@ class Ship
 
 Ship::Ship(int type_id, int owner)
 {
+    if (type_id < 0 || type_id > 4) {
+        throw std::invalid_argument("Ship Class: Invalid type_id");
+    }
     this->type_id = type_id;
+    if (type_id < 0 || type_id > 1) {
+        throw std::invalid_argument("Ship Class: Invalid owner");
+    }
     this->owner = owner;
     // this->char_code = SHIP_CHAR_CODES[type_id];
     // this->name = SHIP_NAMES[type_id];
