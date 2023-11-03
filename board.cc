@@ -13,8 +13,8 @@
 
 // Env Vars
 const int BOARD_SIZE = 10; // 10x10 board
-const std::array<char, BOARD_SIZE> LETTER_LEGEND = {'A', 'B', 'C', 'D', 'E',
-                                                    'F', 'G', 'H', 'I', 'J'};
+// const std::array<char, BOARD_SIZE> LETTER_LEGEND = {'A', 'B', 'C', 'D', 'E',
+//                                                     'F', 'G', 'H', 'I', 'J'};
 
 class Board
 {
@@ -78,7 +78,9 @@ void Board::print()
     // Print vertical legend and board content 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
-        std::cout << LETTER_LEGEND[i] << " ";
+        // TODO: Enable letter legend once letter user input is implemented
+        // std::cout << LETTER_LEGEND[i] << " ";
+        std::cout << i << " ";
         for (int j = 0; j < BOARD_SIZE; j++)
         {
             std::cout << board[i][j] << " ";
