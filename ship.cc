@@ -60,13 +60,19 @@ class Ship
             @return: int
         */
         int get_length();
+
+        /** Gets the char code of ship
+            @param: none
+            @return: char
+        */
+        char get_char_code();
         
     private:
         int type_id;            // Ship ID (0-4)
-        int length;             // Ship length
+        // int length;             // Ship length
         int owner;              // 0 for player, 1 for computer
-        char char_code;         // Representation of ship on board
-        std::string name;       // Ship name
+        // char char_code;         // Representation of ship on board
+        // std::string name;       // Ship name
 };
 
 
@@ -74,9 +80,9 @@ Ship::Ship(int type_id, int owner)
 {
     this->type_id = type_id;
     this->owner = owner;
-    this->char_code = SHIP_CHAR_CODES[type_id];
-    this->name = SHIP_NAMES[type_id];
-    this->length = SHIP_LENGTHS[type_id];
+    // this->char_code = SHIP_CHAR_CODES[type_id];
+    // this->name = SHIP_NAMES[type_id];
+    // this->length = SHIP_LENGTHS[type_id];
 }
 
 int Ship::get_type()
@@ -91,10 +97,15 @@ int Ship::get_owner()
 
 std::string Ship::get_name()
 {
-    return this->name;
+    return SHIP_NAMES[this->type_id];
 }
 
 int Ship::get_length()
 {
-    return this->length;
+    return SHIP_LENGTHS[this->type_id];
+}
+
+char Ship::get_char_code()
+{
+    return SHIP_CHAR_CODES[this->type_id];
 }

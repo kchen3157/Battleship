@@ -26,7 +26,7 @@ class Board
             @param: none
             @return: none
         */
-        void print_board();
+        void print();
 
         /** Sets a char onto board
             @param: x
@@ -41,13 +41,13 @@ class Board
             @param: y
             @return: char
         */
-        char get_board(int x, int y);
+        char get(int x, int y);
 
         /** Erase the board
             @param: none
             @return: none
         */
-        void erase_board();
+        void erase();
 
     private:
         // Main board array
@@ -70,12 +70,12 @@ Board::Board()
 }
 
 
-void Board::print_board()
+void Board::print()
 {
+    // Print horizontal legend
     std::cout << "  0 1 2 3 4 5 6 7 8 9\n";
 
-
-
+    // Print vertical legend and board content 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         std::cout << LETTER_LEGEND[i] << " ";
@@ -92,24 +92,30 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
     // Verify that the ship can be placed given location, direction, and ship length
 
     // Obtain theoretical ship placement
-    std::map<int, int> ship_placement;
+    std::vector< std::pair<int, int> > ship_placement;
+
+
     for (int i = 0; i < ship.get_length(); i++)
     {
         if (direction == 'u')
         {
-            ship_placement.insert(std::pair<int, int>(x - i, y));
+            ship_placement.insert(ship_placement.begin(),
+                                  std::pair<int, int>(x, y - i));
         }
         else if (direction == 'd')
         {
-            ship_placement.insert(std::pair<int, int>(x + i, y));
+            ship_placement.insert(ship_placement.begin(),
+                                  std::pair<int, int>(x, y + i));
         }
         else if (direction == 'r')
         {
-            ship_placement.insert(std::pair<int, int>(x, y + i));
+            ship_placement.insert(ship_placement.begin(),
+                                  std::pair<int, int>(x + i, y));
         }
         else if (direction == 'l')
         {
-            ship_placement.insert(std::pair<int, int>(x, y - i));
+            ship_placement.insert(ship_placement.begin(),
+                                  std::pair<int, int>(x - i, y));
         }
         else
         {
@@ -118,24 +124,38 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
         }
     }
 
-    // Print ship placement
+    // DEBUG: Print ship placement
     for (auto const& pair : ship_placement)
     {
-        std::cout << pair.first << " " << pair.second << std::endl;
+        std::cout << pair.first << ", " << pair.second << std::endl;
     }
 
     // Verify if ship placement is valid
     for (auto const& pair : ship_placement)
     {
-        if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 || pair.second > BOARD_SIZE - 1)
+        if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 ||
+            pair.second > BOARD_SIZE - 1)
         {
-            std::cout << "Invalid placement" << std::endl;
+            std::cout << "Invalid placement: Space(s) off board." << std::endl;
+            return;
+        }
+        if (board[pair.second][pair.first] != '_')
+        {
+            std::cout << "Invalid placement: Space(s) occupied." << std::endl;
             return;
         }
     }
+
+    // Place ship
+    for (auto const& pair : ship_placement)
+    {
+        board[pair.second][pair.first] = ship.get_char_code();
+    }
+
+    std::cout << ship.get_name() << " successfully placed.\n";
 }
 
-void Board::erase_board()
+void Board::erase()
 {
     // Fill board with underscores
     for (int i = 0; i < BOARD_SIZE; i++)

@@ -20,7 +20,7 @@ class Board
             @param: none
             @return: none
         */
-        void print_board();
+        void print();
 
 
         /** Sets a char onto board
@@ -37,14 +37,14 @@ class Board
             @param: y
             @return: char
         */
-        char get_board(int x, int y);
+        char get(int x, int y);
 
 
         /** Erase the board
             @param: none
             @return: none
         */
-        void erase_board();
+        void erase();
 
     private:
         // Main board array
