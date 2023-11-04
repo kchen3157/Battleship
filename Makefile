@@ -1,21 +1,27 @@
-# compiler
-CXX = g++
+# Detect the operating system
+ifeq ($(OS),Windows_NT)
+    CXX = clang++
+else
+    CXX = g++
+endif
 
-# compiler flags
+# Compiler flags
 CXXFLAGS = -Wall -Werror -Wextra -pedantic -std=c++17 -g -fsanitize=address
 
-# linker flags
+# Linker flags for Clang
 LDFLAGS = -fsanitize=address
 
-# source files
+INCFLAGS = -I/path/to/your/compiler/include
+
+# Source files
 SRC += board.cc
 SRC += board_test.cc
 SRC += ship.cc
 
-# object files
+# Object files
 OBJ = $(patsubst %.cc, bin/%.o, $(SRC))
 
-# final executable
+# Final executable
 EXEC = bin/main.out
 
 all: $(EXEC)
