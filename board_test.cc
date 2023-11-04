@@ -1,3 +1,5 @@
+// Application to test the board placing ship functions.
+
 #include "board.hh"
 #include "ship.hh"
 
