@@ -4,11 +4,12 @@
 // TODO: Rotation support
 
 
-// Libararies
+// Libraries
 #include <array>
 #include <iostream>
 #include <map>
 #include <utility>
+#include <vector>
 #include "ship.hh"
 
 // Env Vars
@@ -52,11 +53,14 @@ class Board
     private:
         // Main board array
         char board[BOARD_SIZE][BOARD_SIZE];
+
+        // List of ships currently on board
+        std::vector<Ship> ship_list;
     
 };
 
 
-Board::Board()
+Board::Board() : ship_list()
 {
     // Initialize board with underscores
     for (int i = 0; i < BOARD_SIZE; i++)
@@ -126,7 +130,7 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
         }
     }
 
-    // DEBUG: Print ship placement
+    //* DEBUG: Print ship placement
     for (auto const& pair : ship_placement)
     {
         std::cout << pair.first << ", " << pair.second << std::endl;
@@ -152,8 +156,28 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
     for (auto const& pair : ship_placement)
     {
         board[pair.second][pair.first] = ship.get_char_code();
+        ship.add_coordinate(pair);
     }
 
+    // Save the ship to the ship list
+    ship_list.push_back(ship);
+
+
+    //* DEBUG: Print ship list
+    for (int i = 0; i < (int)(ship_list.size()); i++)
+    {
+        std::cout << ship_list.at(i).get_name() << " @ [";
+        std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
+
+        for (int j = 0; j < (int)(coord_list.size()); j++)
+        {
+            std::cout << "(" << coord_list.at(j).first << ",";
+            std::cout << coord_list.at(j).second << ") ";
+        }
+        std::cout << "]\n";
+    }
+
+    // Inform user of successful placement
     std::cout << ship.get_name() << " successfully placed.\n";
 }
 

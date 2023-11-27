@@ -49,6 +49,9 @@ class Board
     private:
         // Main board array
         char board[BOARD_SIZE][BOARD_SIZE];
+
+        // List of ships currently on board
+        std::vector<Ship> ship_list;
     
 };
 

@@ -24,7 +24,7 @@ int main()
     board.print();
 
     // Place ships successfully
-    std::cout << "Testing occupied place_ship() @ (2,4) UP\n";
+    std::cout << "Testing valid place_ship() @ (2,4) UP\n";
     board.place_ship(2, 4, 'u', Ship(1, 0));
     board.print();
     board.place_ship(7, 4, 'u', Ship(2, 0));

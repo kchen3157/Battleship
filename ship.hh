@@ -3,6 +3,8 @@
 
 #include <array>
 #include <string>
+#include <vector>
+
 
 class Ship
 {
@@ -39,13 +41,26 @@ class Ship
             @return: char
         */
         char get_char_code();
+
+        /** Adds a coordinate to the ship
+            @param: int x, int y
+            @return: none
+        */
+        void add_coordinate(std::pair<int, int> coordinate);
+
+        /** Gets the coordinates of ship
+            @param: none
+            @return: std::vector<int>
+        */
+        std::vector<std::pair<int, int> > get_coordinates();
         
     private:
-        int type_id;            // Ship ID (0-4)
-        // int length;             // Ship length
-        int owner;              // 0 for player, 1 for computer
-        // char char_code;         // Representation of ship on board
-        // std::string name;       // Ship name
+        int type_id;                                // Ship ID (0-4)
+        // int length;                              // Ship length
+        int owner;                                  // 0 for player, 1 for computer
+        // char char_code;                          // Representation of ship on board
+        // std::string name;                        // Ship name
+        std::vector<int> coordinates_occupied;      // Ship's occupied coordinates on board
 };
 
 
