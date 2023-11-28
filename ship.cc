@@ -5,7 +5,7 @@
 
 // Env Vars
 const int SHIP_TYPE_NUMBER = 5;
-std::array<std::string, SHIP_TYPE_NUMBER> SHIP_NAMES = 
+const std::array<std::string, SHIP_TYPE_NUMBER> SHIP_NAMES = 
     {
     "Carrier",      // 0
     "Battleship",   // 1
@@ -13,7 +13,7 @@ std::array<std::string, SHIP_TYPE_NUMBER> SHIP_NAMES =
     "Submarine",    // 3
     "Patrol Boat"   // 4
     };
-std::array<int, SHIP_TYPE_NUMBER> SHIP_LENGTHS = 
+const std::array<int, SHIP_TYPE_NUMBER> SHIP_LENGTHS = 
     {
     5,      // 0, Carrier
     4,      // 1, Battleship
@@ -21,7 +21,7 @@ std::array<int, SHIP_TYPE_NUMBER> SHIP_LENGTHS =
     3,      // 3, Submarine
     2       // 4, Patrol Boat
     };  
-std::array<char, SHIP_TYPE_NUMBER> SHIP_CHAR_CODES = 
+const std::array<char, SHIP_TYPE_NUMBER> SHIP_CHAR_CODES = 
     {
     'C',      // 0, Carrier
     'B',      // 1, Battleship

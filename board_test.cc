@@ -17,11 +17,13 @@ int main()
     std::cout << "Testing valid place_ship() @ (0,0) RIGHT\n";
     board.place_ship(0, 0, 'r', Ship(0, 0));
     board.print();
+    std::cout << "\n\n\n";
 
     // Place ship unsuccessfully
     std::cout << "Testing occupied place_ship() @ (2,4) UP\n";
     board.place_ship(2, 4, 'u', Ship(0, 0));
     board.print();
+    std::cout << "\n\n\n";
 
     // Place ships successfully
     std::cout << "Testing valid place_ship() @ (2,4) UP\n";
@@ -33,6 +35,7 @@ int main()
     board.print();
     board.place_ship(7, 6, 'r', Ship(4, 0));
     board.print();
+    std::cout << "\n\n\n";
 
 
     // User test
@@ -66,9 +69,6 @@ int main()
         board.print();
 
     }
-
-
-
 
     return 0;
 }

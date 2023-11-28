@@ -5,6 +5,31 @@
 #include <string>
 #include <vector>
 
+const int NUM_SHIP_TYPES = 5;
+const std::array<std::string, NUM_SHIP_TYPES> SHIP_NAMES = 
+    {
+    "Carrier",      // 0
+    "Battleship",   // 1
+    "Destroyer",    // 2
+    "Submarine",    // 3
+    "Patrol Boat"   // 4
+    };
+const std::array<int, NUM_SHIP_TYPES> SHIP_LENGTHS = 
+    {
+    5,      // 0, Carrier
+    4,      // 1, Battleship
+    3,      // 2, Destroyer
+    3,      // 3, Submarine
+    2       // 4, Patrol Boat
+    };  
+const std::array<char, NUM_SHIP_TYPES> SHIP_CHAR_CODES = 
+    {
+    'C',      // 0, Carrier
+    'B',      // 1, Battleship
+    'D',      // 2, Destroyer
+    'S',      // 3, Submarine
+    'P'       // 4, Patrol Boat
+    }; 
 
 class Ship
 {
