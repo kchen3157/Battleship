@@ -27,9 +27,9 @@ class Board
             @param: x
             @param: y
             @param: ship
-            @return: none
+            @return: int
         */
-        void place_ship(int x, int y, char direction, Ship ship);
+        int place_ship(int x, int y, char direction, Ship ship);
 
     
         /** Gets a char from board

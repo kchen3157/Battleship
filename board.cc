@@ -1,8 +1,5 @@
 //* Board Class: Handles game state
 
-// TODO: Design user input
-// TODO: Rotation support
-
 
 // Libraries
 #include <array>
@@ -10,6 +7,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <ncurses.h>
 #include "ship.hh"
 
 // Env Vars
@@ -35,7 +33,7 @@ class Board
             @param: ship
             @return: none
         */
-        void place_ship(int x, int y, char direction, Ship ship);
+        int place_ship(int x, int y, char direction, Ship ship);
 
         /** Gets a char from board
             @param: x
@@ -77,25 +75,24 @@ Board::Board() : ship_list()
 void Board::print()
 {
     // Print horizontal legend
-    std::cout << "  0 1 2 3 4 5 6 7 8 9 X\n";
+    printw("  0 1 2 3 4 5 6 7 8 9 X\n");
 
     // Print vertical legend and board content 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         // TODO: Enable letter legend once letter user input is implemented
-        // std::cout << LETTER_LEGEND[i] << " ";
-        std::cout << i << " ";
+        printw("%i ", i);
         for (int j = 0; j < BOARD_SIZE; j++)
         {
-            std::cout << board[i][j] << " ";
+            printw("%c ", board[i][j]);
         }
-        std::cout << std::endl;
+        printw("\n");
     }
 
-    std::cout << "Y\n";
+    printw("Y\n");
 }
 
-void Board::place_ship(int x, int y, char direction, Ship ship)
+int Board::place_ship(int x, int y, char direction, Ship ship)
 {
     // Verify that the ship can be placed given location, direction, and ship length
 
@@ -127,16 +124,17 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
         }
         else
         {
-            std::cout << "Invalid direction" << std::endl;
-            return;
+            printw("Invalid direction\n");
+            refresh();
+            return -1;
         }
     }
 
     //* DEBUG: Print ship placement
-    for (const std::pair<int, int> &pair : ship_placement)
-    {
-        std::cout << pair.first << ", " << pair.second << std::endl;
-    }
+    // for (const std::pair<int, int> &pair : ship_placement)
+    // {
+    //     std::cout << pair.first << ", " << pair.second << std::endl;
+    // }
 
     // Verify if ship placement is valid
     for (const std::pair<int, int> &pair : ship_placement)
@@ -144,13 +142,15 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
         if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 ||
             pair.second > BOARD_SIZE - 1)
         {
-            std::cout << "Invalid placement: Space(s) off board." << std::endl;
-            return;
+            printw("Invalid placement: Space(s) off-board.\n");
+            refresh();
+            return -1;
         }
         if (board[pair.second][pair.first] != '_')
         {
-            std::cout << "Invalid placement: Space(s) occupied." << std::endl;
-            return;
+            printw("Invalid placement: Space(s) occupied.\n");
+            refresh();
+            return -1;
         }
     }
 
@@ -166,21 +166,23 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
 
 
     //* DEBUG: Print ship list
-    for (int i = 0; i < (int)(ship_list.size()); i++)
-    {
-        std::cout << ship_list.at(i).get_name() << " @ [";
-        std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
+    // for (int i = 0; i < (int)(ship_list.size()); i++)
+    // {
+    //     std::cout << ship_list.at(i).get_name() << " @ [";
+    //     std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
 
-        for (int j = 0; j < (int)(coord_list.size()); j++)
-        {
-            std::cout << "(" << coord_list.at(j).first << ",";
-            std::cout << coord_list.at(j).second << ") ";
-        }
-        std::cout << "]\n";
-    }
+    //     for (int j = 0; j < (int)(coord_list.size()); j++)
+    //     {
+    //         std::cout << "(" << coord_list.at(j).first << ",";
+    //         std::cout << coord_list.at(j).second << ") ";
+    //     }
+    //     std::cout << "]\n";
+    // }
 
     // Inform user of successful placement
-    std::cout << ship.get_name() << " successfully placed @ ()" << x << ", " << y << ")\n";
+    printw("%s successfully placed @ (%d, %d)\n", ship.get_name().c_str(), x, y);
+
+    return 0;
 }
 
 void Board::erase()
