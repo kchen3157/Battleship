@@ -9,7 +9,7 @@ LDFLAGS = -fsanitize=address
 
 # source files
 SRC += board.cc
-SRC += board_test.cc
+SRC += game.cc
 SRC += ship.cc
 
 # object files
