@@ -133,13 +133,13 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
     }
 
     //* DEBUG: Print ship placement
-    for (auto const& pair : ship_placement)
+    for (const std::pair<int, int> &pair : ship_placement)
     {
         std::cout << pair.first << ", " << pair.second << std::endl;
     }
 
     // Verify if ship placement is valid
-    for (auto const& pair : ship_placement)
+    for (const std::pair<int, int> &pair : ship_placement)
     {
         if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 ||
             pair.second > BOARD_SIZE - 1)
@@ -155,7 +155,7 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
     }
 
     // Place ship
-    for (auto const& pair : ship_placement)
+    for (const std::pair<int, int> &pair : ship_placement)
     {
         board[pair.second][pair.first] = ship.get_char_code();
         ship.add_coordinate(pair);
@@ -180,7 +180,7 @@ void Board::place_ship(int x, int y, char direction, Ship ship)
     }
 
     // Inform user of successful placement
-    std::cout << ship.get_name() << " successfully placed.\n";
+    std::cout << ship.get_name() << " successfully placed @ ()" << x << ", " << y << ")\n";
 }
 
 void Board::erase()
