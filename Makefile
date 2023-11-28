@@ -11,6 +11,7 @@ LDFLAGS = -fsanitize=address
 SRC += board.cc
 SRC += game.cc
 SRC += ship.cc
+SRC += player_input.cc
 
 # object files
 OBJ = $(patsubst %.cc, bin/%.o, $(SRC))
