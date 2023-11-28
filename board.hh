@@ -16,11 +16,17 @@ class Board
         // Constructor
         Board();
 
-        /** Prints the board.
+        /** Prints the main board.
             @param: none
             @return: none
         */
-        void print();
+        void print_main();
+
+        /** Prints the secondary board.
+            @param: none
+            @return: none
+        */
+        void print_secondary();
 
 
         /** Sets a char onto board
@@ -40,15 +46,31 @@ class Board
         char get(int x, int y);
 
 
-        /** Erase the board
+        /** Erase the main board
             @param: none
             @return: none
         */
-        void erase();
+        void erase_main();
+
+        /** Erase the secondary board
+            @param: none
+            @return: none
+        */
+        void erase_secondary();
+
+        /** Attack a coordinate on the board
+            @param: x
+            @param: y
+            @param: ref_board
+            @return: int
+        */
+        int attack(int x, int y, Board* ref_board);
 
     private:
         // Main board array
-        char board[BOARD_SIZE][BOARD_SIZE];
+        char board_main[BOARD_SIZE][BOARD_SIZE];
+        // Secondary board array for attacks
+        char board_secondary[BOARD_SIZE][BOARD_SIZE];
 
         // List of ships currently on board
         std::vector<Ship> ship_list;
