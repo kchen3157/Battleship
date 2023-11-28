@@ -17,14 +17,17 @@ int main()
         std::cout << "Enter ship type, then x, y, then direction (r, l, u, d)\n\n";
         std::cout << "Ships left:\nType\t\tID\tLength\n";
 
+        // Print list of ships left to place
         for (int i = 0; i < NUM_SHIP_TYPES; i++)
         {
-            if (ship_ids_left & (0b00000001 << i))
+            // If ship still left, print
+            if (ship_ids_left & (0b00000001 << i))  
             {
                 std::cout << SHIP_NAMES[i] << "\r\t\t" << i << "\t" << SHIP_LENGTHS[i] << "\n";
             }
         }
 
+        // Print board
         board_p0.print();
 
         // Obtain user input
@@ -38,9 +41,12 @@ int main()
         int type_id = (int) (user_input[0] - '0');      // type of ship
         int type_id_binary = 0b00000001 << type_id;     // type of ship in binary
 
-        if (ship_ids_left & type_id_binary)
+        if (ship_ids_left & type_id_binary) // If ship left
         {
+            //Place ship
             board_p0.place_ship(x, y, direction, Ship(type_id, 0));
+            
+            // Remove ship from list of ships left
             ship_ids_left &= ~type_id_binary;
         }
         else
