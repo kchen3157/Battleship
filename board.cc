@@ -213,17 +213,17 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
 
 
     //* DEBUG: Print ship list
-    for (int i = 0; i < (int)(ship_list.size()); i++)
-    {
-        printw("%s @ [", ship_list.at(i).get_name().c_str());
-        std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
+    // for (int i = 0; i < (int)(ship_list.size()); i++)
+    // {
+    //     printw("%s @ [", ship_list.at(i).get_name().c_str());
+    //     std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
 
-        for (int j = 0; j < (int)(coord_list.size()); j++)
-        {
-            printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
-        }
-        printw("]\n");
-    }
+    //     for (int j = 0; j < (int)(coord_list.size()); j++)
+    //     {
+    //         printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
+    //     }
+    //     printw("]\n");
+    // }
 
     // Inform user of successful placement
     printw("%s successfully placed @ (%d, %d)\n", ship.get_name().c_str(), x, y);

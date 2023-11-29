@@ -10,13 +10,30 @@
 #include <array>
 #include <ncurses.h>
 
+std::string get_user_input_string()
+{
+    std::string user_input;
+    refresh();
+    nocbreak();
+    echo();
+    int ch = getch();
+    while (ch != '\n')
+    {
+        user_input.push_back( ch );
+        ch = getch();
+    }
+    noecho();
+    cbreak();
+
+    return user_input;
+}
+
 int get_user_start_board(Board* board, int player_num)
 {
     int ship_ids_left = 0b00011111;     // Binary representation of five ship types
 
     while (ship_ids_left) // While there are still ships left to place
     {
-        std::string user_input;             // Temp string to assist user input
 
         // Print user instructions
         printw("*******************PLAYER %i********************\n", player_num);
@@ -49,15 +66,7 @@ int get_user_start_board(Board* board, int player_num)
         // Obtain user input
         printw("Enter your move: ");
         refresh();
-        nocbreak();
-        echo();
-        int ch = getch();
-        while (ch != '\n')
-        {
-            user_input.push_back( ch );
-            ch = getch();
-        }
-        noecho();
+        std::string user_input = get_user_input_string();
 
         // Parse user input
         int x = (int) (user_input[1] - '0');            // x coord of ship
@@ -96,3 +105,33 @@ int get_user_start_board(Board* board, int player_num)
 
     return 0;
 }
+
+int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
+{
+    // Continuation screen to hide board
+    clear();
+    printw("Player %i: Your turn. Press enter to continue.\n", atk_player_num);
+    refresh();
+    getch();
+    clear();
+
+    printw("*******************PLAYER %i********************\n\n\n", atk_player_num);
+
+    // Print attacking boards
+    atk_board->print_main();
+    atk_board->print_secondary();
+
+    // Print instructions
+    printw("Enter your move (xy): ");
+    refresh();
+
+    // Get user input
+    std::string user_input = get_user_input_string();
+
+    // Attack opposing board
+    atk_board->attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), opp_board);
+
+
+    return 0;
+}
+
