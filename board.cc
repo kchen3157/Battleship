@@ -65,7 +65,7 @@ class Board
             @param: ref_board
             @return: int
         */
-        int attack(int x, int y, Board* ref_board);
+        int attack(int x, int y, Board* opposing_board);
 
     private:
         // Main board array
@@ -95,6 +95,9 @@ Board::Board() : ship_list()
 
 void Board::print_main()
 {
+    // Print main label
+    printw("**********MAIN*********\n");
+
     // Print horizontal legend
     printw("  0 1 2 3 4 5 6 7 8 9 X\n");
 
@@ -115,6 +118,9 @@ void Board::print_main()
 
 void Board::print_secondary()
 {
+    // Print main label
+    printw("**********OPP**********\n");
+
     // Print horizontal legend
     printw("  0 1 2 3 4 5 6 7 8 9 X\n");
 
@@ -207,18 +213,17 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
 
 
     //* DEBUG: Print ship list
-    // for (int i = 0; i < (int)(ship_list.size()); i++)
-    // {
-    //     std::cout << ship_list.at(i).get_name() << " @ [";
-    //     std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
+    for (int i = 0; i < (int)(ship_list.size()); i++)
+    {
+        printw("%s @ [", ship_list.at(i).get_name().c_str());
+        std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
 
-    //     for (int j = 0; j < (int)(coord_list.size()); j++)
-    //     {
-    //         std::cout << "(" << coord_list.at(j).first << ",";
-    //         std::cout << coord_list.at(j).second << ") ";
-    //     }
-    //     std::cout << "]\n";
-    // }
+        for (int j = 0; j < (int)(coord_list.size()); j++)
+        {
+            printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
+        }
+        printw("]\n");
+    }
 
     // Inform user of successful placement
     printw("%s successfully placed @ (%d, %d)\n", ship.get_name().c_str(), x, y);
@@ -314,16 +319,32 @@ int Board::attack(int x, int y, Board* opposing_board)
         coord_list.erase(
             std::remove(coord_list.begin(), coord_list.end(), coord_to_delete)
         );
+
+        // Inform user of successful attack
+        printw("Attack successful @ (%d, %d)\n", x, y);
+        refresh();
+
+        //* DEBUG: Print ship list
+        for (int i = 0; i < (int)(ship_list.size()); i++)
+        {
+            printw("%s @ [", ship_list.at(i).get_name().c_str());
+            std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
+
+            for (int j = 0; j < (int)(coord_list.size()); j++)
+            {
+                printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
+            }
+            printw("]\n");
+        }
         
     }
     else // If missed attack
     {
+        printw("Attack missed");
         board_secondary[y][x] = 'F';
     }
 
-    // Inform user of successful attack
-    printw("Attack successful @ (%d, %d)\n", x, y);
-    refresh();
+    
 
     return 0;
 }

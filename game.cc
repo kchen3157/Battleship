@@ -27,7 +27,32 @@ int main()
         refresh();
         getch();
         clear();
+
+        printw("*******************PLAYER 0********************\n\n\n");
+
+        // Print Player 0 boards
+        board_p0.print_main();
+        board_p0.print_secondary();
+
+        printw("Enter your move (xy): ");
         refresh();
+
+        // Get user input
+        std::string user_input;
+
+        refresh();
+        nocbreak();
+        echo();
+        int ch = getch();
+        while (ch != '\n')
+        {
+            user_input.push_back( ch );
+            ch = getch();
+        }
+        noecho();
+
+        // Attack player 1 board
+        board_p0.attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), &board_p1);
 
 
         // Player 1 turn

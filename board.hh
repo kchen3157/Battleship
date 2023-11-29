@@ -64,7 +64,7 @@ class Board
             @param: ref_board
             @return: int
         */
-        int attack(int x, int y, Board* ref_board);
+        int attack(int x, int y, Board* opposing_board);
 
     private:
         // Main board array

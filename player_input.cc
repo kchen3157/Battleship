@@ -44,7 +44,7 @@ int get_user_start_board(Board* board, int player_num)
         printw("\n\n");
 
         // Print board
-        board->print();
+        board->print_main();
 
         // Obtain user input
         printw("Enter your move: ");
@@ -87,7 +87,7 @@ int get_user_start_board(Board* board, int player_num)
         refresh();
     }
 
-    board->print();
+    board->print_main();
     printw("\n\nPlayer %i: All ships placed!\n", player_num);
     refresh();
     sleep(2);
