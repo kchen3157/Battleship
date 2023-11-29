@@ -4,6 +4,13 @@
 #include <array>
 #include <iostream>
 #include <map>
+
+#ifdef _WIN32
+#include<windows.h>
+#else
+#include<unistd.h>
+#endif
+
 #include <utility>
 #include <vector>
 #include <ncurses.h>
@@ -323,24 +330,27 @@ int Board::attack(int x, int y, Board* opposing_board)
         // Inform user of successful attack
         printw("Attack successful @ (%d, %d)\n", x, y);
         refresh();
+        sleep(1);
 
         //* DEBUG: Print ship list
-        for (int i = 0; i < (int)(ship_list.size()); i++)
-        {
-            printw("%s @ [", ship_list.at(i).get_name().c_str());
-            std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
+        // for (int i = 0; i < (int)(ship_list.size()); i++)
+        // {
+        //     printw("%s @ [", ship_list.at(i).get_name().c_str());
+        //     std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
 
-            for (int j = 0; j < (int)(coord_list.size()); j++)
-            {
-                printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
-            }
-            printw("]\n");
-        }
+        //     for (int j = 0; j < (int)(coord_list.size()); j++)
+        //     {
+        //         printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
+        //     }
+        //     printw("]\n");
+        // }
         
     }
     else // If missed attack
     {
         printw("Attack missed");
+        refresh();
+        sleep(1);
         board_secondary[y][x] = 'F';
     }
 
