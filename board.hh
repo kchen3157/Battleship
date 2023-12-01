@@ -6,7 +6,10 @@
 #include <utility>
 #include "ship.hh"
 
-const int BOARD_SIZE = 10;
+// Env Vars
+const int BOARD_SIZE = 10; // 10x10 board 
+// const std::array<char, BOARD_SIZE> LETTER_LEGEND = {'A', 'B', 'C', 'D', 'E',
+//                                                     'F', 'G', 'H', 'I', 'J'};
 
 
 class Board

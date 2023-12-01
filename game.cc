@@ -9,7 +9,7 @@
 int main()
 {
     initscr(); // Initialize ncurses
-    refresh(); // Refresh screen
+    refresh();
 
     Board board_p0, board_p1;           // Player 0 and 1 boards
     
@@ -17,8 +17,6 @@ int main()
     get_user_start_board(&board_p0, 0);
     get_user_start_board(&board_p1, 1);
     
-    nocbreak();        
-
     // Main game loop
     while (true)
     {

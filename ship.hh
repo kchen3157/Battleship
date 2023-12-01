@@ -80,12 +80,12 @@ class Ship
         std::vector<std::pair<int, int> > get_coordinates();
         
     private:
-        int type_id;                                // Ship ID (0-4)
-        // int length;                              // Ship length
-        int owner;                                  // 0 for player, 1 for computer
-        // char char_code;                          // Representation of ship on board
-        // std::string name;                        // Ship name
-        std::vector<int> coordinates_occupied;      // Ship's occupied coordinates on board
+        int type_id;                                                 // Ship ID (0-4)
+        // int length;                                               // Ship length
+        int owner;                                                   // 0 for player, 1 for computer
+        // char char_code;                                           // Representation of ship on board
+        // std::string name;                                         // Ship name
+        std::vector<std::pair<int, int> > coordinates_occupied;      // Ship's occupied coordinates on board
 };
 
 
