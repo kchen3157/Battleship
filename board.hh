@@ -32,21 +32,14 @@ class Board
         void print_secondary();
 
 
-        /** Sets a char onto board
-            @param: x
-            @param: y
-            @param: ship
+        /** Sets a ship onto the main board
+            @param: int x
+            @param: int y
+            @param: char direction
+            @param: Ship ship
             @return: int
         */
         int place_ship(int x, int y, char direction, Ship ship);
-
-    
-        /** Gets a char from board
-            @param: x
-            @param: y
-            @return: char
-        */
-        char get(int x, int y);
 
 
         /** Erase the main board
@@ -62,9 +55,9 @@ class Board
         void erase_secondary();
 
         /** Attack a coordinate on the board
-            @param: x
-            @param: y
-            @param: ref_board
+            @param: int x
+            @param: int y
+            @param: Board* opposing_board
             @return: int
         */
         int attack(int x, int y, Board* opposing_board);

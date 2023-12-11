@@ -43,7 +43,6 @@ void Board::print_main()
     // Print vertical legend and board content 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
-        // TODO: Enable letter legend once letter user input is implemented
         printw("%i ", i);
         for (int j = 0; j < BOARD_SIZE; j++)
         {
@@ -110,9 +109,7 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
         }
         else
         {
-            printw("Invalid direction\n");
-            refresh();
-            return -1;
+            throw std::invalid_argument("Board Class: place_ship(), invalid direction");
         }
     }
 
@@ -128,9 +125,7 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
         if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 ||
             pair.second > BOARD_SIZE - 1)
         {
-            printw("Invalid placement: Space(s) off-board.\n");
-            refresh();
-            return -1;
+            throw std::invalid_argument("Board Class: place_ship(), invalid placement, out-of-board");
         }
         if (board_main[pair.second][pair.first] != '_')
         {
@@ -252,6 +247,8 @@ int Board::attack(int x, int y, Board* opposing_board)
                 break;
         }
 
+
+        // erase 
         std::vector<std::pair<int, int> > coord_list = opposing_board->ship_list.at(ship_type_id).get_coordinates();
         std::pair<int, int> coord_to_delete = std::pair<int, int>(x, y);
 

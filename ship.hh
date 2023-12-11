@@ -68,14 +68,14 @@ class Ship
         char get_char_code();
 
         /** Adds a coordinate to the ship
-            @param: int x, int y
+            @param: std::pair<int, int> coordinate
             @return: none
         */
         void add_coordinate(std::pair<int, int> coordinate);
 
         /** Gets the coordinates of ship
             @param: none
-            @return: std::vector<int>
+            @return: std::vector<std::pair<int, int> >
         */
         std::vector<std::pair<int, int> > get_coordinates();
         
