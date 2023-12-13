@@ -11,7 +11,7 @@
             "cwd": "${workspaceFolder}",
             "showDisplayString": false,
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "internalConsoleOptions": "openOnSessionStart",
             "MIMode": "lldb"
         }
