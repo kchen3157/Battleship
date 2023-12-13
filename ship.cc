@@ -58,3 +58,8 @@ std::vector<std::pair<int, int> > Ship::get_coordinates()
 {
     return coordinates_occupied;
 }
+
+std::vector<std::pair<int, int> >* Ship::get_coordinates_ptr()
+{
+    return &coordinates_occupied;
+}

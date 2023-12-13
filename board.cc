@@ -249,17 +249,16 @@ int Board::attack(int x, int y, Board* opposing_board)
 
 
         // erase 
-        std::vector<std::pair<int, int> > coord_list = opposing_board->ship_list.at(ship_type_id).get_coordinates();
+        std::vector<std::pair<int, int> >* coord_list = opposing_board->ship_list.at(ship_type_id).get_coordinates_ptr();
         std::pair<int, int> coord_to_delete = std::pair<int, int>(x, y);
 
-        coord_list.erase(
-            std::remove(coord_list.begin(), coord_list.end(), coord_to_delete)
+        coord_list->erase(
+            std::remove(coord_list->begin(), coord_list->end(), coord_to_delete)
         );
 
         // Inform user of successful attack
         printw("Attack successful @ (%d, %d)\n", x, y);
         refresh();
-        sleep(1);
 
         //* DEBUG: Print ship list
         // for (int i = 0; i < (int)(ship_list.size()); i++)
@@ -273,15 +272,52 @@ int Board::attack(int x, int y, Board* opposing_board)
         //     }
         //     printw("]\n");
         // }
+        // refresh();
+
+
+        //* DEBUG: Print coord list
+        for (int i = 0; i < (int) (coord_list->size()); i++)
+        {
+            printw("(%i, %i)\n", coord_list->at(i).first, coord_list->at(i).first);
+        }
+        refresh();
+
+        sleep(1);
+
+        std::vector<Ship>* opp_ship_list = &opposing_board->ship_list;
+        if (coord_list->empty())
+        {
+            printw("Destroyed opponent's %s.\n", SHIP_NAMES[ship_type_id].c_str());
+            refresh();
+
+            for (int i = 0; i < (int) opp_ship_list->size(); i++)
+            {
+                if (opp_ship_list->at(i).get_type() == ship_type_id)
+                {
+                    opp_ship_list->erase(opp_ship_list->begin() + i);
+                }
+            }
+
+            //* DEBUG: Print opponent ship list
+            for (int i = 0; i < (int)(opp_ship_list->size()); i++)
+            {
+                printw("%s", opp_ship_list->at(i).get_name().c_str());
+            }
+            refresh();
+        }
+
+        sleep(1);
         
     }
     else // If missed attack
     {
-        printw("Attack missed");
+        printw("Attack missed\n");
         refresh();
         sleep(1);
         board_secondary[y][x] = 'F';
     }
+
+    
 
     
 

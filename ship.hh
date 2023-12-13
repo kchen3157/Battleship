@@ -78,6 +78,13 @@ class Ship
             @return: std::vector<std::pair<int, int> >
         */
         std::vector<std::pair<int, int> > get_coordinates();
+
+        /** Gets pointer to coordinates of ship
+            @param: none
+            @return: std::vector<std::pair<int, int> >*
+        */
+        std::vector<std::pair<int, int> >* get_coordinates_ptr();
+
         
     private:
         int type_id;                                                 // Ship ID (0-4)
