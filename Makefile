@@ -17,7 +17,7 @@ SRC += playerio.cc
 OBJ = $(patsubst %.cc, bin/%.o, $(SRC))
 
 # final executable
-EXEC = bin/main.out
+EXEC = bin/game.out
 
 all: $(EXEC)
 
