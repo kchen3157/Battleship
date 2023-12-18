@@ -53,6 +53,8 @@ int main()
 
             if (turn_result == 1)
             {
+                printw("Player 0 wins!\n");
+                endwin();
                 return 0;
             }
         }
@@ -65,7 +67,9 @@ int main()
 
             if (turn_result == 1)
             {
-                return 0;
+                printw("Player 0 wins!\n");
+                endwin();
+                return 0;            
             }
         }
         while (turn_result);

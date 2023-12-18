@@ -331,11 +331,6 @@ int Board::attack(int x, int y, Board* opposing_board)
 
         if (opp_ship_list->empty())
         {
-            printw("You won!");
-            refresh();
-
-            sleep(2);
-
             return 1;
         }
 
