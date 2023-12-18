@@ -14,7 +14,7 @@ std::string get_user_input_string()
 {
     std::string user_input;
     refresh();
-    nocbreak();
+    noraw();
     echo();
     int ch = getch();
     while (ch != '\n')
@@ -23,7 +23,7 @@ std::string get_user_input_string()
         ch = getch();
     }
     noecho();
-    cbreak();
+    raw();
 
     return user_input;
 }
@@ -140,9 +140,6 @@ int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
     std::string user_input = get_user_input_string();
 
     // Attack opposing board
-    atk_board->attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), opp_board);
-
-
-    return 0;
+    return atk_board->attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), opp_board);
 }
 

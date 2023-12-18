@@ -109,7 +109,10 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
         }
         else
         {
-            throw std::invalid_argument("Board Class: place_ship(), invalid direction");
+            printw("Invalid Direction.\n");
+            refresh();
+            sleep(1);
+            return -1;
         }
     }
 
@@ -125,12 +128,16 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
         if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 ||
             pair.second > BOARD_SIZE - 1)
         {
-            throw std::invalid_argument("Board Class: place_ship(), invalid placement, out-of-board");
+            printw("Invalid Placement: Space(s) out-of-board.\n");
+            refresh();
+            sleep(1);
+            return -1;
         }
         if (board_main[pair.second][pair.first] != '_')
         {
             printw("Invalid placement: Space(s) occupied.\n");
             refresh();
+            sleep(1);
             return -1;
         }
     }
@@ -248,13 +255,30 @@ int Board::attack(int x, int y, Board* opposing_board)
         }
 
 
-        // erase 
-        std::vector<std::pair<int, int> >* coord_list = opposing_board->ship_list.at(ship_type_id).get_coordinates_ptr();
+        // erase
+
+        std::vector<std::pair<int, int> >* coord_list;
+
+        for (int i = 0; i < (int) opposing_board->ship_list.size(); i++)
+        {
+            if (opposing_board->ship_list.at(i).get_type() == ship_type_id)
+            {
+                coord_list = opposing_board->ship_list.at(i).get_coordinates_ptr();
+            }
+        }
+
         std::pair<int, int> coord_to_delete = std::pair<int, int>(x, y);
 
-        coord_list->erase(
-            std::remove(coord_list->begin(), coord_list->end(), coord_to_delete)
-        );
+        auto it = find(coord_list->begin(), coord_list->end(),
+                   coord_to_delete);
+ 
+        if (it != coord_list->end()) {
+            coord_list->erase(it);
+        }
+
+        // coord_list->erase(
+        //     std::remove(coord_list->begin(), coord_list->end(), coord_to_delete)
+        // );
 
         // Inform user of successful attack
         printw("Attack successful @ (%d, %d)\n", x, y);
@@ -276,13 +300,12 @@ int Board::attack(int x, int y, Board* opposing_board)
 
 
         //* DEBUG: Print coord list
-        for (int i = 0; i < (int) (coord_list->size()); i++)
-        {
-            printw("(%i, %i)\n", coord_list->at(i).first, coord_list->at(i).first);
-        }
-        refresh();
-
-        sleep(1);
+        // for (int i = 0; i < (int) (coord_list->size()); i++)
+        // {
+        //     printw("(%i, %i)\n", coord_list->at(i).first, coord_list->at(i).first);
+        // }
+        // refresh();
+        // sleep(1);
 
         std::vector<Ship>* opp_ship_list = &opposing_board->ship_list;
         if (coord_list->empty())
@@ -299,11 +322,21 @@ int Board::attack(int x, int y, Board* opposing_board)
             }
 
             //* DEBUG: Print opponent ship list
-            for (int i = 0; i < (int)(opp_ship_list->size()); i++)
-            {
-                printw("%s", opp_ship_list->at(i).get_name().c_str());
-            }
+            // for (int i = 0; i < (int)(opp_ship_list->size()); i++)
+            // {
+            //     printw("%s", opp_ship_list->at(i).get_name().c_str());
+            // }
+            // refresh();
+        }
+
+        if (opp_ship_list->empty())
+        {
+            printw("You won!");
             refresh();
+
+            sleep(2);
+
+            return 1;
         }
 
         sleep(1);
@@ -322,4 +355,16 @@ int Board::attack(int x, int y, Board* opposing_board)
     
 
     return 0;
+}
+
+
+void Board::set(char board[BOARD_SIZE][BOARD_SIZE])
+{
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            board_main[i][j] = board[i][j];
+        }
+    }
 }

@@ -62,6 +62,8 @@ class Board
         */
         int attack(int x, int y, Board* opposing_board);
 
+        void set(char board_main[BOARD_SIZE][BOARD_SIZE]);
+
     private:
         // Main board array
         char board_main[BOARD_SIZE][BOARD_SIZE];
