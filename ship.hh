@@ -45,6 +45,12 @@ class Ship
         */
         int get_type();
 
+        /** Gets the length of ship
+            @param: none
+            @return: int
+        */
+        int get_length();
+
         /** Gets the char code of ship
             @param: none
             @return: char
