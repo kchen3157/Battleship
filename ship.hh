@@ -45,7 +45,7 @@ class Ship
 
         /** Get owner of ship
             @param: none
-            @return: 0 for player, 1 for computer
+            @return: int: 0 for player, 1 for computer
         */
         int get_owner();
 
