@@ -44,9 +44,6 @@ int get_user_start_board(Board* board, int player_num)
     while (ship_ids_left) // While there are still ships left to place
     {
 
-        // Print instructions and board
-        
-
         // Obtain user input
         std::string user_input;
         while (true)
@@ -62,7 +59,6 @@ int get_user_start_board(Board* board, int player_num)
             }
             else
             {
-                // printw("Invalid input!\n");
                 refresh();
                 sleep(1);
                 clear();
@@ -86,7 +82,6 @@ int get_user_start_board(Board* board, int player_num)
         else
         {
             printw("Ship already placed or invalid ship!\n");
-            // Display error for one second before continuing
             refresh();
             sleep(1);
         }
@@ -95,7 +90,7 @@ int get_user_start_board(Board* board, int player_num)
         refresh();
     }
 
-    // When all ships placed, inform user and continue after two seconds.
+    // When all ships placed, inform user
     print_game_state(board, player_num);
 
     printw("Player %i: All ships placed!\nPress enter to continue...", player_num);
@@ -109,10 +104,10 @@ int get_user_start_board(Board* board, int player_num)
 
 int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
 {
-    
+    // Print game state
     print_game_state(atk_board, atk_player_num);
 
-    // Print instructions
+    // Print instruction
     printw("Enter your move (xy): ");
     refresh();
 

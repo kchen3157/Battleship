@@ -14,18 +14,9 @@
 #include <curses.h>
 #include <signal.h>
 
-
-// void handle_resize(int sig __attribute__((unused))) {
-//     endwin();           
-//     refresh();         
-//     resizeterm(0, 0);   
-//     refresh();         
-// }
-
 int main()
 {
-    // signal(SIGWINCH, handle_resize); // Handle window resize
-
+    // Initialize ncurses
     initscr();
     cbreak();
 
@@ -37,30 +28,16 @@ int main()
     get_user_start_board(&board_p0, 0);
     get_user_start_board(&board_p1, 1);
 
-    // char board[10][10] = {
-    //     {'C', 'B', 'D', 'S', 'P', '_', '_', '_', '_', '_'},
-    //     {'C', 'B', 'D', 'S', 'P', '_', '_', '_', '_', '_'},
-    //     {'C', 'B', 'D', 'S', '_', '_', '_', '_', '_', '_'},
-    //     {'C', 'B', '_', '_', '_', '_', '_', '_', '_', '_'},
-    //     {'C', '_', '_', '_', '_', '_', '_', '_', '_', '_'},
-    //     {'_', '_', '_', '_', '_', '_', '_', '_', '_', '_'},
-    //     {'_', '_', '_', '_', '_', '_', '_', '_', '_', '_'},
-    //     {'_', '_', '_', '_', '_', '_', '_', '_', '_', '_'},
-    //     {'_', '_', '_', '_', '_', '_', '_', '_', '_', '_'},
-    //     {'_', '_', '_', '_', '_', '_', '_', '_', '_', '_'},
-    // };
-
-    // board_p0.set(board);
-    // board_p1.set(board);
-
     // Main game loop
     while (true) {
-        // Player 0 turn
+        //* Player 0 turn
+
         // Continuation screen to hide board
-            clear();
-            printw("Player 0: Your turn. Press enter to continue.\n");
-            refresh();
-            getch();
+        clear();
+        printw("Player 0: Your turn. Press enter to continue.\n");
+        refresh();
+        getch();
+
         do
         {
             turn_result = get_user_attack(&board_p0, &board_p1, 0);
@@ -74,12 +51,14 @@ int main()
         }
         while (turn_result);
 
-        // Player 1 turn
+        //* Player 1 turn
+
         // Continuation screen to hide board
-            clear();
-            printw("Player 1: Your turn. Press enter to continue.\n");
-            refresh();
-            getch();
+        clear();
+        printw("Player 1: Your turn. Press enter to continue.\n");
+        refresh();
+        getch();
+
         do
         {
             turn_result = get_user_attack(&board_p1, &board_p0, 1);

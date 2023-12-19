@@ -6,6 +6,8 @@
 #include <vector>
 
 const int NUM_SHIP_TYPES = 5;
+
+// Some ship constants
 const std::array<std::string, NUM_SHIP_TYPES> SHIP_NAMES = 
     {
     "Carrier",      // 0
@@ -43,24 +45,6 @@ class Ship
         */
         int get_type();
 
-        /** Get owner of ship
-            @param: none
-            @return: int: 0 for player, 1 for computer
-        */
-        int get_owner();
-
-        /** Gets the name of ship
-            @param: none
-            @return: string
-        */
-        std::string get_name();
-
-        /** Gets the length of ship
-            @param: none
-            @return: int
-        */
-        int get_length();
-
         /** Gets the char code of ship
             @param: none
             @return: char
@@ -88,10 +72,6 @@ class Ship
         
     private:
         int type_id;                                                 // Ship ID (0-4)
-        // int length;                                               // Ship length
-        int owner;                                                   // 0 for player, 1 for computer
-        // char char_code;                                           // Representation of ship on board
-        // std::string name;                                         // Ship name
         std::vector<std::pair<int, int> > coordinates_occupied;      // Ship's occupied coordinates on board
 };
 

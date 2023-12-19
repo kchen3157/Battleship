@@ -1,10 +1,8 @@
-//* Board Class: Handles game state
-
 // Libraries
 #include "playerio.hh"
-#include <array>
-#include <iostream>
-#include <map>
+#include "ship.hh"
+#include "board.hh"
+
 
 #ifdef _WIN32
 #include<windows.h>
@@ -15,8 +13,9 @@
 #include <utility>
 #include <vector>
 #include <ncurses.h>
-#include "ship.hh"
-#include "board.hh"
+#include <array>
+#include <iostream>
+#include <map>
 
 
 Board::Board() : ship_list()
@@ -66,7 +65,6 @@ void Board::print_secondary()
     // Print vertical legend and board content 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
-        // TODO: Enable letter legend once letter user input is implemented
         printw("%i ", i);
         for (int j = 0; j < BOARD_SIZE; j++)
         {
@@ -82,10 +80,9 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
 {
     // Verify that the ship can be placed given location, direction, and ship length
 
-    // Obtain theoretical ship placement
     std::vector< std::pair<int, int> > ship_placement;
 
-
+    // Obtain theoretical ship placement
     for (int i = 0; i < ship.get_length(); i++)
     {
         if (direction == 'u')
@@ -117,13 +114,7 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
         }
     }
 
-    //* DEBUG: Print ship placement
-    // for (const std::pair<int, int> &pair : ship_placement)
-    // {
-    //     std::cout << pair.first << ", " << pair.second << std::endl;
-    // }
-
-    // Verify if ship placement is valid
+    // Verify if theoretical ship placement is valid
     for (const std::pair<int, int> &pair : ship_placement)
     {
         if (pair.first < 0 || pair.first > BOARD_SIZE - 1 || pair.second < 0 ||
@@ -153,48 +144,7 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
     // Save the ship to the ship list
     ship_list.push_back(ship);
 
-
-    //* DEBUG: Print ship list
-    // for (int i = 0; i < (int)(ship_list.size()); i++)
-    // {
-    //     printw("%s @ [", ship_list.at(i).get_name().c_str());
-    //     std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
-
-    //     for (int j = 0; j < (int)(coord_list.size()); j++)
-    //     {
-    //         printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
-    //     }
-    //     printw("]\n");
-    // }
-
-    // Inform user of successful placement
-    // printw("%s successfully placed @ (%d, %d)\n", ship.get_name().c_str(), x, y);
-
     return 0;
-}
-
-void Board::erase_main()
-{
-    // Fill board with underscores
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE ; j++)
-        {
-            board_main[i][j] = '_';
-        }
-    }
-}
-
-void Board::erase_secondary()
-{
-    // Fill board with underscores
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE ; j++)
-        {
-            board_secondary[i][j] = '_';
-        }
-    }
 }
 
 
@@ -231,7 +181,6 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
         // Redraw game state
         print_game_state(this, player_num);
 
-        // TODO: Maybe move this to ship class?
         // Convert ship character to type id
         switch (ship_char) {
             case 'C':
@@ -259,64 +208,35 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
         }
 
 
-        // erase
-
+        // erase coordinate from opposing ship
         std::vector<std::pair<int, int> >* coord_list;
 
         for (int i = 0; i < (int) opposing_board->ship_list.size(); i++)
         {
-            if (opposing_board->ship_list.at(i).get_type() == ship_type_id)
+            // Find corresponding ship in opposing ship list
+            if (opposing_board->ship_list.at(i).get_type() == ship_type_id) 
             {
+                // Get pointer to coordinate list of ship
                 coord_list = opposing_board->ship_list.at(i).get_coordinates_ptr();
             }
         }
 
+        // Remove coordinate from coordinate list
         std::pair<int, int> coord_to_delete = std::pair<int, int>(x, y);
-
-        // auto it = find(coord_list->begin(), coord_list->end(),
-        //            coord_to_delete);
- 
-        // if (it != coord_list->end()) {
-        //     coord_list->erase(it);
-        // }
-
         coord_list->erase(
             std::remove(coord_list->begin(), coord_list->end(), coord_to_delete)
         );
 
-        // Inform user of successful attack
-        // printw("Attack successful @ (%d, %d)\n", x, y);
         refresh();
 
-        //* DEBUG: Print ship list
-        // for (int i = 0; i < (int)(ship_list.size()); i++)
-        // {
-        //     printw("%s @ [", ship_list.at(i).get_name().c_str());
-        //     std::vector<std::pair<int, int> > coord_list = ship_list.at(i).get_coordinates();
-
-        //     for (int j = 0; j < (int)(coord_list.size()); j++)
-        //     {
-        //         printw("(%i, %i) ", coord_list.at(j).first, coord_list.at(j).second);
-        //     }
-        //     printw("]\n");
-        // }
-        // refresh();
-
-
-        //* DEBUG: Print coord list
-        // for (int i = 0; i < (int) (coord_list->size()); i++)
-        // {
-        //     printw("(%i, %i)\n", coord_list->at(i).first, coord_list->at(i).first);
-        // }
-        // refresh();
-        // sleep(1);
-
+        // Check if ship is destroyed
         std::vector<Ship>* opp_ship_list = &opposing_board->ship_list;
         if (coord_list->empty())
         {
             printw("Destroyed opponent's %s.\n", SHIP_NAMES[ship_type_id].c_str());
             refresh();
 
+            // Remove ship from opposing ship list
             for (int i = 0; i < (int) opp_ship_list->size(); i++)
             {
                 if (opp_ship_list->at(i).get_type() == ship_type_id)
@@ -324,18 +244,12 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
                     opp_ship_list->erase(opp_ship_list->begin() + i);
                 }
             }
-
-            //* DEBUG: Print opponent ship list
-            // for (int i = 0; i < (int)(opp_ship_list->size()); i++)
-            // {
-            //     printw("%s", opp_ship_list->at(i).get_name().c_str());
-            // }
-            // refresh();
         }
 
+        // Check if all ships are destroyed
         if (opp_ship_list->empty())
         {
-            return 1;
+            return 1; // Return 1 for victory
         }
 
         sleep(1);
@@ -348,11 +262,7 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
         sleep(1);
         board_secondary[y][x] = 'F';
     }
-
     
-
-    
-
     return 0;
 }
 

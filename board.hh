@@ -8,9 +8,6 @@
 
 // Env Vars
 const int BOARD_SIZE = 10; // 10x10 board 
-// const std::array<char, BOARD_SIZE> LETTER_LEGEND = {'A', 'B', 'C', 'D', 'E',
-//                                                     'F', 'G', 'H', 'I', 'J'};
-
 
 class Board
 {
@@ -31,7 +28,6 @@ class Board
         */
         void print_secondary();
 
-
         /** Sets a ship onto the main board
             @param: int x
             @param: int y
@@ -40,7 +36,6 @@ class Board
             @return: int
         */
         int place_ship(int x, int y, char direction, Ship ship);
-
 
         /** Erase the main board
             @param: none

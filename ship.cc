@@ -29,15 +29,6 @@ int Ship::get_type()
     return this->type_id;
 }
 
-int Ship::get_owner()
-{
-    return this->owner;
-}
-
-std::string Ship::get_name()
-{
-    return SHIP_NAMES[this->type_id];
-}
 
 int Ship::get_length()
 {
