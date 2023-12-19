@@ -1,6 +1,7 @@
 //* Board Class: Handles game state
 
 // Libraries
+#include "playerio.hh"
 #include <array>
 #include <iostream>
 #include <map>
@@ -167,7 +168,7 @@ int Board::place_ship(int x, int y, char direction, Ship ship)
     // }
 
     // Inform user of successful placement
-    printw("%s successfully placed @ (%d, %d)\n", ship.get_name().c_str(), x, y);
+    // printw("%s successfully placed @ (%d, %d)\n", ship.get_name().c_str(), x, y);
 
     return 0;
 }
@@ -197,7 +198,7 @@ void Board::erase_secondary()
 }
 
 
-int Board::attack(int x, int y, Board* opposing_board)
+int Board::attack(int x, int y, Board* opposing_board, int player_num)
 {
     // Check if attack is valid
     if (x < 0 || x > BOARD_SIZE - 1 || y < 0 || y > BOARD_SIZE - 1)
@@ -224,6 +225,9 @@ int Board::attack(int x, int y, Board* opposing_board)
 
         // Remove ship piece from opposing main board
         opposing_board->board_main[y][x] = 'X';
+
+        // Redraw game state
+        print_game_state(this, player_num);
 
         // TODO: Maybe move this to ship class?
         // Convert ship character to type id

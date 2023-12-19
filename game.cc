@@ -12,10 +12,19 @@
 
 #include <array>
 #include <curses.h>
+#include <signal.h>
+
+
+// void handle_resize(int sig __attribute__((unused))) {
+//     endwin();           // End the ncurses mode temporarily
+//     refresh();          // Refresh the screen
+//     resizeterm(0, 0);   // Resize the terminal to the updated dimensions
+//     refresh();          // Refresh the screen again
+// }
 
 int main()
 {
-
+    // signal(SIGWINCH, handle_resize); // Handle window resize
 
     initscr();
     cbreak();
@@ -67,7 +76,7 @@ int main()
 
             if (turn_result == 1)
             {
-                printw("Player 0 wins!\n");
+                printw("Player 1 wins!\n");
                 endwin();
                 return 0;            
             }

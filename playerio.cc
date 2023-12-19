@@ -1,5 +1,6 @@
 #include "board.hh"
 #include "ship.hh"
+#include "playerio.hh"
 
 #ifdef _WIN32
 #include<windows.h>
@@ -43,39 +44,31 @@ int get_user_start_board(Board* board, int player_num)
     while (ship_ids_left) // While there are still ships left to place
     {
 
-        // Print user instructions
-        printw("*******************PLAYER %i********************\n", player_num);
-        printw("Enter ship type, then x, y, then direction (r, l, u, d)\n\n");
+        // Print instructions and board
+        
 
-
-        // Print list of ships left to place
-        attron(A_BOLD); // Bold typeface
-        printw("Ships left:\nType\t\tID\tLength\n");
-        attroff(A_BOLD);
-        for (int i = 0; i < NUM_SHIP_TYPES; i++)
+        // Obtain user input
+        std::string user_input;
+        while (true)
         {
-            // If ship still left, print it out
-            if (ship_ids_left & (1 << i))  
+            print_get_start_board_instructions(board, player_num, ship_ids_left);
+            printw("Enter your move: ");
+            refresh();
+            user_input = get_user_input_string();
+
+            if (user_input.length() == 4)
             {
-                printw("%-15s\t%i\t%i\n", SHIP_NAMES[i].c_str(), i, SHIP_LENGTHS[i]);
+                break;
             }
             else
             {
-                printw("\n");
+                printw("Invalid input!\n");
+                refresh();
+                sleep(1);
+                clear();
+                refresh();
             }
         }
-
-        // Padding
-        printw("\n\n");
-
-        // Print board
-        board->print_main();
-
-
-        // Obtain user input
-        printw("Enter your move: ");
-        refresh();
-        std::string user_input = get_user_input_string();
 
         // Parse user input
         int x = user_input[1] - '0';            // x coord of ship
@@ -84,32 +77,30 @@ int get_user_start_board(Board* board, int player_num)
         int type_id = user_input[0] - '0';      // type of ship
         int type_id_binary = 1 << type_id;      // type of ship in binary
 
-
-        if (ship_ids_left & type_id_binary) // If ship left
+        if ((ship_ids_left & type_id_binary) &&
+            !(board->place_ship(x, y, direction, Ship(type_id, 0))))
         {
-            //Place ship
-            while(board->place_ship(x, y, direction, Ship(type_id, 0)));
-
             // Remove ship from list of ships left
             ship_ids_left &= ~type_id_binary;
         }
         else
         {
             printw("Ship already placed or invalid ship!\n");
+            // Display error for one second before continuing
+            refresh();
+            sleep(1);
         }
 
-        // Display feedback for one second before continuing
-        refresh();
-        sleep(1);
         clear();
         refresh();
     }
 
     // When all ships placed, inform user and continue after two seconds.
-    board->print_main();
-    printw("\n\nPlayer %i: All ships placed!\n", player_num);
+    print_game_state(board, player_num);
+
+    printw("Player %i: All ships placed!\nPress enter to continue...", player_num);
     refresh();
-    sleep(2);
+    getch();
     clear();
     refresh();
 
@@ -123,14 +114,8 @@ int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
     printw("Player %i: Your turn. Press enter to continue.\n", atk_player_num);
     refresh();
     getch();
-    clear();
-
-    // Print player header
-    printw("*******************PLAYER %i********************\n\n\n", atk_player_num);
-
-    // Print attacking boards
-    atk_board->print_main();
-    atk_board->print_secondary();
+    
+    print_game_state(atk_board, atk_player_num);
 
     // Print instructions
     printw("Enter your move (xy): ");
@@ -140,6 +125,58 @@ int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
     std::string user_input = get_user_input_string();
 
     // Attack opposing board
-    return atk_board->attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), opp_board);
+    return atk_board->attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), opp_board, atk_player_num);
 }
 
+
+void print_game_state(Board* atk_board, int atk_player_num)
+{
+    // Clear screen
+    clear();
+
+    // Print player header
+    printw("*******************PLAYER %i********************\n\n\n", atk_player_num);
+
+    // Print attacking boards
+    atk_board->print_main();
+    atk_board->print_secondary();
+
+    // Padding
+    printw("\n\n");
+
+    refresh();
+}
+
+
+
+void print_get_start_board_instructions(Board* board, int player_num, int ship_ids_left)
+{
+    // Print user instructions
+    printw("*******************PLAYER %i********************\n", player_num);
+    printw("Enter ship type, then x, y, then direction (r, l, u, d)\n\n");
+
+    // Print list of ships left to place
+    attron(A_BOLD); // Bold typeface
+    printw("Ships left:\nType\t\tID\tLength\n");
+    attroff(A_BOLD);
+
+    for (int i = 0; i < NUM_SHIP_TYPES; i++)
+    {
+        // If ship still left, print it out
+        if (ship_ids_left & (1 << i))  
+        {
+            printw("%-15s\t%i\t%i\n", SHIP_NAMES[i].c_str(), i, SHIP_LENGTHS[i]);
+        }
+        else
+        {
+            printw("\n");
+        }
+    }
+
+    // Padding
+    printw("\n\n");
+    // Print board
+    board->print_main();
+    // Padding
+    printw("\n\n");
+}

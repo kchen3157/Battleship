@@ -60,7 +60,7 @@ class Board
             @param: Board* opposing_board
             @return: int
         */
-        int attack(int x, int y, Board* opposing_board);
+        int attack(int x, int y, Board* opposing_board, int player_num);
 
         void set(char board_main[BOARD_SIZE][BOARD_SIZE]);
 
