@@ -62,6 +62,10 @@ class Board
         */
         int attack(int x, int y, Board* opposing_board, int player_num);
 
+        /** Sets the main board to a given board
+            @param: char board_main[BOARD_SIZE][BOARD_SIZE]
+            @return: none
+        */
         void set(char board_main[BOARD_SIZE][BOARD_SIZE]);
 
     private:

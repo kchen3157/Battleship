@@ -233,29 +233,27 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
         // Convert ship character to type id
         switch (ship_char) {
             case 'C':
-                printw("Carrier hit!\n");
+                printw("Carrier hit!");
                 ship_type_id = 0;
                 break;
             case 'B':
-                printw("Battleship hit!\n");
+                printw("Battleship hit!");
                 ship_type_id = 1;
                 break;
             case 'D':
-                printw("Destroyer hit!\n");
+                printw("Destroyer hit!");
                 ship_type_id = 2;
                 break;
             case 'S':
-                printw("Submarine hit!\n");
+                printw("Submarine hit!");
                 ship_type_id = 3;
                 break;
             case 'P':
-                printw("Patrol Boat hit!\n");
+                printw("Patrol Boat hit!");
                 ship_type_id = 4;
                 break;
             default:
-                printw("Invalid ship hit!\n");
-                ship_type_id = -1;
-                break;
+                return -1;
         }
 
 
@@ -273,19 +271,19 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
 
         std::pair<int, int> coord_to_delete = std::pair<int, int>(x, y);
 
-        auto it = find(coord_list->begin(), coord_list->end(),
-                   coord_to_delete);
+        // auto it = find(coord_list->begin(), coord_list->end(),
+        //            coord_to_delete);
  
-        if (it != coord_list->end()) {
-            coord_list->erase(it);
-        }
+        // if (it != coord_list->end()) {
+        //     coord_list->erase(it);
+        // }
 
-        // coord_list->erase(
-        //     std::remove(coord_list->begin(), coord_list->end(), coord_to_delete)
-        // );
+        coord_list->erase(
+            std::remove(coord_list->begin(), coord_list->end(), coord_to_delete)
+        );
 
         // Inform user of successful attack
-        printw("Attack successful @ (%d, %d)\n", x, y);
+        // printw("Attack successful @ (%d, %d)\n", x, y);
         refresh();
 
         //* DEBUG: Print ship list

@@ -7,7 +7,7 @@
 #ifdef _WIN32
 #include<windows.h>
 #else
-#include<unistd.h>
+#include <unistd.h>
 #endif
 
 #include <array>
@@ -16,10 +16,10 @@
 
 
 // void handle_resize(int sig __attribute__((unused))) {
-//     endwin();           // End the ncurses mode temporarily
-//     refresh();          // Refresh the screen
-//     resizeterm(0, 0);   // Resize the terminal to the updated dimensions
-//     refresh();          // Refresh the screen again
+//     endwin();           
+//     refresh();         
+//     resizeterm(0, 0);   
+//     refresh();         
 // }
 
 int main()
@@ -84,7 +84,8 @@ int main()
         while (turn_result);
     }
 
-    endwin(); // End ncurses
+    // We shouldn't get here
+    endwin();
 
     return 0;
 }

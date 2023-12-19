@@ -139,6 +139,7 @@ void print_game_state(Board* atk_board, int atk_player_num)
 
     // Print attacking boards
     atk_board->print_main();
+    printw("\n");
     atk_board->print_secondary();
 
     // Padding
@@ -152,11 +153,15 @@ void print_game_state(Board* atk_board, int atk_player_num)
 void print_get_start_board_instructions(Board* board, int player_num, int ship_ids_left)
 {
     // Print user instructions
+    attron(A_BOLD);
     printw("*******************PLAYER %i********************\n", player_num);
-    printw("Enter ship type, then x, y, then direction (r, l, u, d)\n\n");
+    attroff(A_BOLD);
+    printw("Enter ship ID, then x, y, then direction (r, l, u, d)\n\n");
+    printw("Example: 000r  -> Carrier placed at (0, 0) facing right\n\n");
+    
 
     // Print list of ships left to place
-    attron(A_BOLD); // Bold typeface
+    attron(A_BOLD);
     printw("Ships left:\nType\t\tID\tLength\n");
     attroff(A_BOLD);
 
