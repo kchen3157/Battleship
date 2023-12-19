@@ -62,7 +62,7 @@ int get_user_start_board(Board* board, int player_num)
             }
             else
             {
-                printw("Invalid input!\n");
+                // printw("Invalid input!\n");
                 refresh();
                 sleep(1);
                 clear();
@@ -109,11 +109,6 @@ int get_user_start_board(Board* board, int player_num)
 
 int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
 {
-    // Continuation screen to hide board
-    clear();
-    printw("Player %i: Your turn. Press enter to continue.\n", atk_player_num);
-    refresh();
-    getch();
     
     print_game_state(atk_board, atk_player_num);
 
@@ -124,7 +119,7 @@ int get_user_attack(Board* atk_board, Board* opp_board, int atk_player_num)
     // Get user input
     std::string user_input = get_user_input_string();
 
-    // Attack opposing board
+    // Attack opposing board and return attack result
     return atk_board->attack((int)(user_input[0] - '0'), (int)(user_input[1] - '0'), opp_board, atk_player_num);
 }
 

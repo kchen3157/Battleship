@@ -56,6 +56,11 @@ int main()
     // Main game loop
     while (true) {
         // Player 0 turn
+        // Continuation screen to hide board
+            clear();
+            printw("Player 0: Your turn. Press enter to continue.\n");
+            refresh();
+            getch();
         do
         {
             turn_result = get_user_attack(&board_p0, &board_p1, 0);
@@ -70,6 +75,11 @@ int main()
         while (turn_result);
 
         // Player 1 turn
+        // Continuation screen to hide board
+            clear();
+            printw("Player 1: Your turn. Press enter to continue.\n");
+            refresh();
+            getch();
         do
         {
             turn_result = get_user_attack(&board_p1, &board_p0, 1);

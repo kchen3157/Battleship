@@ -203,14 +203,16 @@ int Board::attack(int x, int y, Board* opposing_board, int player_num)
     // Check if attack is valid
     if (x < 0 || x > BOARD_SIZE - 1 || y < 0 || y > BOARD_SIZE - 1)
     {
-        printw("Invalid attack: Space off-board.\n");
+        printw("Invalid attack: Space off-board or invalid coordinates.\n");
         refresh();
+        sleep(1);
         return -1;
     }
     if (board_secondary[y][x] != '_')
     {
         printw("Invalid attack: Space already attacked.\n");
         refresh();
+        sleep(1);
         return -1;
     }
 
