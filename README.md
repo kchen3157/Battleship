@@ -19,4 +19,8 @@ Implementation of the popular game "Battleship" in C++.
 - A hit, miss, and sink will be displayed accordingly.
 - Upon sinking all of the computer's ships, either the computer or player wins.
 
+## Lower Design
+- Split into ship and board classes; Handle state with board.
+- Each ship shall track its coords; each board shall track its ships, and thus all occupied coords.
+
 
